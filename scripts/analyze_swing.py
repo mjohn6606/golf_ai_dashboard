@@ -3,7 +3,7 @@ from pathlib import Path
 
 data_dir = Path(__file__).resolve().parents[1] / "data"
 video_dir = data_dir / "swing_videos"
-output_json = data_dir / "sample_swing_analysis.json"
+output_json = data_dir / "swing_analysis.json"
 output_viz_dir = data_dir / "swing_analysis_visuals"
 output_viz_dir.mkdir(exist_ok=True)
 
