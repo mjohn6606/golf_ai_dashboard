@@ -1,0 +1,23 @@
+[
+  {
+    "Club": "Driver",
+    "Carry": 248,
+    "Total": 265,
+    "BallSpeed": 160,
+    "ClubSpeed": 95
+  },
+  {
+    "Club": "7-iron",
+    "Carry": 140,
+    "Total": 150,
+    "BallSpeed": 95,
+    "ClubSpeed": 75
+  },
+  {
+    "Club": "PW",
+    "Carry": 85,
+    "Total": 95,
+    "BallSpeed": 75,
+    "ClubSpeed": 60
+  }
+]

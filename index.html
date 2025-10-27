@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Project Scratch — Golf AI Dashboard</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site-header">
+  <h1>Project Scratch — Golf AI Dashboard</h1>
+  <p class="lead">Rapsodo MLM2 Pro data • OpenCV swing analysis • Mobility tracking</p>
+</header>
+
+<main class="container">
+  <section class="card">
+    <h2>Live KPIs</h2>
+    <div id="kpiRow" class="kpi-row"></div>
+  </section>
+
+  <section class="card">
+    <h2>Rapsodo — Club Carry (sample)</h2>
+    <canvas id="carryChart"></canvas>
+  </section>
+
+  <section class="card">
+    <h2>Swing Analysis (pose)</h2>
+    <canvas id="swingRotationChart"></canvas>
+    <p id="swingSummary" class="muted"></p>
+  </section>
+
+  <section class="card">
+    <h2>Mobility Progress</h2>
+    <canvas id="mobilityChart"></canvas>
+  </section>
+
+  <section class="card">
+    <h2>AI Insight</h2>
+    <div id="aiInsight" class="ai-box">No insight yet — load data to get a quick recommendation.</div>
+  </section>
+
+  <section class="card small">
+    <h3>How to update data</h3>
+    <ol>
+      <li>Replace files in /data (rapsodo.json, swing_analysis.json, mobility.json) and push to GitHub.</li>
+      <li>Or run the included upload script to push via <code>git</code> or <code>gh</code> CLI with SSH.</li>
+      <li>Enable GitHub Pages in repo Settings → Pages (branch: main, folder: root).</li>
+    </ol>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="assets/dashboard.js"></script>
+</body>
+</html>

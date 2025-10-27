@@ -1,0 +1,28 @@
+name: Auto-swing-analysis
+on:
+  push:
+    paths:
+      - 'videos/**'
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          pip install opencv-python mediapipe numpy moviepy
+      - name: Run analyzer for a sample video (customize path)
+        run: |
+          python scripts/analyze_swing.py --video videos/example_swing.mp4 --out videos/example_swing_annotated.mp4 --json data/sample_swing_analysis.json
+      - name: Commit outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/sample_swing_analysis.json || true
+          git add videos/*_annotated.mp4 || true
+          git commit -m "Auto-run swing analysis" || true
+          git push origin HEAD:main

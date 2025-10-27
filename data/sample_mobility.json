@@ -1,0 +1,17 @@
+[
+  {
+    "date": "2025-10-01",
+    "trunk_rotation_deg": 36,
+    "hip_rotation_deg": 40
+  },
+  {
+    "date": "2025-10-08",
+    "trunk_rotation_deg": 38,
+    "hip_rotation_deg": 42
+  },
+  {
+    "date": "2025-10-15",
+    "trunk_rotation_deg": 41,
+    "hip_rotation_deg": 44
+  }
+]
