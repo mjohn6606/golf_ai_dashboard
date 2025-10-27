@@ -1,6 +1,5 @@
-#!/usr/bin/env bash
-# Simple upload workflow: commit & push all changes (requires git SSH configured)
-git add data/*
-git commit -m "Update dashboard data" || true
+#!/bin/bash
+cd "$(dirname "$0")/.."
+git add .
+git commit -m "Auto-update: Rapsodo + Swing data"
 git push origin main
-echo "Data pushed. GitHub Pages will update shortly."

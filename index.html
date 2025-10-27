@@ -1,55 +1,83 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Project Scratch — Golf AI Dashboard</title>
-<link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Golf AI Dashboard</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<header class="site-header">
-  <h1>Project Scratch — Golf AI Dashboard</h1>
-  <p class="lead">Rapsodo MLM2 Pro data • OpenCV swing analysis • Mobility tracking</p>
-</header>
+  <header>
+    <h1>🏌️ Golf AI Dashboard</h1>
+    <p>Track your game with Rapsodo & OpenCV Insights</p>
+  </header>
 
-<main class="container">
-  <section class="card">
-    <h2>Live KPIs</h2>
-    <div id="kpiRow" class="kpi-row"></div>
-  </section>
+  <nav>
+    <button class="tab-button active" data-tab="shots">Shots</button>
+    <button class="tab-button" data-tab="swing">Swing</button>
+    <button class="tab-button" data-tab="mobility">Mobility</button>
+  </nav>
 
-  <section class="card">
-    <h2>Rapsodo — Club Carry (sample)</h2>
-    <canvas id="carryChart"></canvas>
-  </section>
+  <main>
+    <!-- Shot Data -->
+    <section id="shots" class="tab active">
+      <h2>📊 Shot Analytics</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Shot Dispersion</h3>
+          <canvas id="dispersionChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>Averages per Club</h3>
+          <canvas id="avgClubChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>Carry Distance per Club</h3>
+          <canvas id="carryChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>Consistency (Std Dev per Club)</h3>
+          <canvas id="consistencyChart"></canvas>
+        </div>
+      </div>
+    </section>
 
-  <section class="card">
-    <h2>Swing Analysis (pose)</h2>
-    <canvas id="swingRotationChart"></canvas>
-    <p id="swingSummary" class="muted"></p>
-  </section>
+    <!-- Swing Data -->
+    <section id="swing" class="tab">
+      <h2>🎥 Swing Analysis</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Tempo Ratio</h3>
+          <canvas id="tempoChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>Rotation Angles</h3>
+          <canvas id="rotationChart"></canvas>
+        </div>
+        <div class="card">
+          <h3>Hand Path</h3>
+          <canvas id="handPathChart"></canvas>
+        </div>
+      </div>
+    </section>
 
-  <section class="card">
-    <h2>Mobility Progress</h2>
-    <canvas id="mobilityChart"></canvas>
-  </section>
+    <!-- Mobility Data -->
+    <section id="mobility" class="tab">
+      <h2>🧘 Mobility Progress</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Mobility Trends</h3>
+          <canvas id="mobilityChart"></canvas>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <section class="card">
-    <h2>AI Insight</h2>
-    <div id="aiInsight" class="ai-box">No insight yet — load data to get a quick recommendation.</div>
-  </section>
+  <footer>
+    <p>Powered by Rapsodo • OpenCV • Chart.js • GitHub Pages</p>
+  </footer>
 
-  <section class="card small">
-    <h3>How to update data</h3>
-    <ol>
-      <li>Replace files in /data (rapsodo.json, swing_analysis.json, mobility.json) and push to GitHub.</li>
-      <li>Or run the included upload script to push via <code>git</code> or <code>gh</code> CLI with SSH.</li>
-      <li>Enable GitHub Pages in repo Settings → Pages (branch: main, folder: root).</li>
-    </ol>
-  </section>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="assets/dashboard.js"></script>
+  <script src="assets/dashboard.js"></script>
 </body>
 </html>
