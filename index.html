@@ -3,79 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Golf AI Dashboard</title>
+  <title>Golf Performance Dashboard</title>
   <link rel="stylesheet" href="assets/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header>
-    <h1>🏌️ Golf AI Dashboard</h1>
-    <p>Track your game with Rapsodo & OpenCV Insights</p>
+    <h1>Golf Performance Dashboard</h1>
   </header>
 
-  <nav>
-    <button class="tab-button active" data-tab="shots">Shots</button>
-    <button class="tab-button" data-tab="swing">Swing</button>
-    <button class="tab-button" data-tab="mobility">Mobility</button>
-  </nav>
-
   <main>
-    <!-- Shot Data -->
-    <section id="shots" class="tab active">
-      <h2>📊 Shot Analytics</h2>
-      <div class="card-grid">
-        <div class="card">
-          <h3>Shot Dispersion</h3>
-          <canvas id="dispersionChart"></canvas>
-        </div>
-        <div class="card">
-          <h3>Averages per Club</h3>
-          <canvas id="avgClubChart"></canvas>
-        </div>
-        <div class="card">
-          <h3>Carry Distance per Club</h3>
-          <canvas id="carryChart"></canvas>
-        </div>
-        <div class="card">
-          <h3>Consistency (Std Dev per Club)</h3>
-          <canvas id="consistencyChart"></canvas>
-        </div>
-      </div>
+    <section class="summary">
+      <h2>Club Averages</h2>
+      <div id="club-averages"></div>
     </section>
 
-    <!-- Swing Data -->
-    <section id="swing" class="tab">
-      <h2>🎥 Swing Analysis</h2>
-      <div class="card-grid">
-        <div class="card">
-          <h3>Tempo Ratio</h3>
-          <canvas id="tempoChart"></canvas>
-        </div>
-        <div class="card">
-          <h3>Rotation Angles</h3>
-          <canvas id="rotationChart"></canvas>
-        </div>
-        <div class="card">
-          <h3>Hand Path</h3>
-          <canvas id="handPathChart"></canvas>
-        </div>
+    <section class="charts">
+      <div class="chart-card">
+        <h3>Shot Dispersion</h3>
+        <canvas id="shot-dispersion"></canvas>
       </div>
-    </section>
 
-    <!-- Mobility Data -->
-    <section id="mobility" class="tab">
-      <h2>🧘 Mobility Progress</h2>
-      <div class="card-grid">
-        <div class="card">
-          <h3>Mobility Trends</h3>
-          <canvas id="mobilityChart"></canvas>
-        </div>
+      <div class="chart-card">
+        <h3>Carry Distance per Club</h3>
+        <canvas id="carry-distance"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Consistency per Club</h3>
+        <canvas id="consistency-chart"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Swing Posture Metrics</h3>
+        <canvas id="swing-posture"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h3>Mobility Trends</h3>
+        <canvas id="mobility-trends"></canvas>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>Powered by Rapsodo • OpenCV • Chart.js • GitHub Pages</p>
+    <p>Powered by Rapsodo - Chart.js - OpenCV</p>
   </footer>
 
   <script src="assets/dashboard.js"></script>

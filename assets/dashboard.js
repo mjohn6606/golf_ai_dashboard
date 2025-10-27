@@ -1,121 +1,110 @@
-// Load JSON Data + Render Charts
-async function fetchJSON(path) {
-  const res = await fetch(path);
-  return await res.json();
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
-  const rapsodo = await fetchJSON("data/sample_rapsodo.json");
-  const swing = await fetchJSON("data/sample_swing_analysis.json");
-  const mobility = await fetchJSON("data/sample_mobility.json");
+  try {
+    // Example: Load your Rapsodo Excel data that has been converted to JSON via backend or script
+    const response = await fetch("scripts/rapsodo_data.json");
+    const data = await response.json();
 
-  renderRapsodoCharts(rapsodo);
-  renderSwingCharts(swing);
-  renderMobilityCharts(mobility);
-  setupTabs();
+    renderClubAverages(data);
+    renderShotDispersion(data);
+    renderCarryDistance(data);
+    renderConsistency(data);
+    renderSwingPosture(data);
+    renderMobilityTrends(data);
+  } catch (err) {
+    console.error("Failed to load data:", err);
+  }
 });
 
-function setupTabs() {
-  const buttons = document.querySelectorAll(".tab-button");
-  const tabs = document.querySelectorAll(".tab");
+function renderClubAverages(data) {
+  const averagesDiv = document.getElementById("club-averages");
+  averagesDiv.innerHTML = "";
 
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      buttons.forEach(b => b.classList.remove("active"));
-      tabs.forEach(t => t.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(btn.dataset.tab).classList.add("active");
-    });
+  data.clubs.forEach(club => {
+    const card = document.createElement("div");
+    card.classList.add("average-card");
+    card.innerHTML = `
+      <h4>${club.name}</h4>
+      <p><strong>Carry:</strong> ${club.avgCarry} yds</p>
+      <p><strong>Ball Speed:</strong> ${club.avgBallSpeed} mph</p>
+      <p><strong>Launch:</strong> ${club.avgLaunch}°</p>
+    `;
+    averagesDiv.appendChild(card);
   });
 }
 
-// ---------------------- RAPTODO ----------------------
-
-function renderRapsodoCharts(data) {
-  const clubs = [...new Set(data.map(d => d.Club || "Unknown"))];
-
-  const avgPerClub = clubs.map(club => {
-    const shots = data.filter(d => d.Club === club);
-    return shots.reduce((a, b) => a + (b["Total Distance"] || 0), 0) / shots.length;
-  });
-
-  const carryPerClub = clubs.map(club => {
-    const shots = data.filter(d => d.Club === club);
-    return shots.reduce((a, b) => a + (b["Carry Distance"] || 0), 0) / shots.length;
-  });
-
-  const consistency = clubs.map(club => {
-    const shots = data.filter(d => d.Club === club).map(s => s["Carry Distance"] || 0);
-    const mean = shots.reduce((a, b) => a + b, 0) / shots.length;
-    const variance = shots.map(x => (x - mean) ** 2).reduce((a, b) => a + b, 0) / shots.length;
-    return Math.sqrt(variance);
-  });
-
-  // Dispersion Chart
-  new Chart(document.getElementById("dispersionChart"), {
+function renderShotDispersion(data) {
+  const ctx = document.getElementById("shot-dispersion");
+  new Chart(ctx, {
     type: "scatter",
     data: {
+      datasets: data.shotDispersion.map(c => ({
+        label: c.club,
+        data: c.shots.map(s => ({ x: s.x, y: s.y })),
+        pointRadius: 5
+      }))
+    },
+    options: {
+      plugins: { legend: { position: "bottom" } },
+      scales: { x: { title: { display: true, text: "Left/Right (yds)" } },
+                y: { title: { display: true, text: "Carry (yds)" } } }
+    }
+  });
+}
+
+function renderCarryDistance(data) {
+  const ctx = document.getElementById("carry-distance");
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: data.clubs.map(c => c.name),
       datasets: [{
-        label: "Shot Dispersion",
-        data: data.map(d => ({x: d["Offline"] || 0, y: d["Carry Distance"] || 0})),
-        pointBackgroundColor: "#4CAF50"
+        label: "Carry Distance (yds)",
+        data: data.clubs.map(c => c.avgCarry)
       }]
     },
-    options: { scales: {x: {title: {text: "Offline (yds)", display: true}}, y: {title: {text: "Carry (yds)", display: true}} } }
-  });
-
-  // Bar Charts
-  new Chart(document.getElementById("avgClubChart"), {
-    type: "bar",
-    data: { labels: clubs, datasets: [{ label: "Average Distance", data: avgPerClub, backgroundColor: "#3b82f6" }] },
-  });
-
-  new Chart(document.getElementById("carryChart"), {
-    type: "bar",
-    data: { labels: clubs, datasets: [{ label: "Carry Distance", data: carryPerClub, backgroundColor: "#10b981" }] },
-  });
-
-  new Chart(document.getElementById("consistencyChart"), {
-    type: "bar",
-    data: { labels: clubs, datasets: [{ label: "Std Deviation", data: consistency, backgroundColor: "#f59e0b" }] },
+    options: { plugins: { legend: { display: false } } }
   });
 }
 
-// ---------------------- SWING ----------------------
-
-function renderSwingCharts(data) {
-  // Simplified — assuming JSON has metrics like tempo, rotation, and hand_path arrays
-  const tempo = data.map(d => d.tempo || 0);
-  const rotation = data.map(d => d.rotation || 0);
-  const handPath = data.map(d => d.hand_path || 0);
-
-  new Chart(document.getElementById("tempoChart"), {
-    type: "line",
-    data: { labels: tempo.map((_, i) => i + 1), datasets: [{ label: "Tempo Ratio", data: tempo, borderColor: "#2563eb" }] },
-  });
-
-  new Chart(document.getElementById("rotationChart"), {
-    type: "line",
-    data: { labels: rotation.map((_, i) => i + 1), datasets: [{ label: "Rotation", data: rotation, borderColor: "#9333ea" }] },
-  });
-
-  new Chart(document.getElementById("handPathChart"), {
-    type: "line",
-    data: { labels: handPath.map((_, i) => i + 1), datasets: [{ label: "Hand Path", data: handPath, borderColor: "#ef4444" }] },
+function renderConsistency(data) {
+  const ctx = document.getElementById("consistency-chart");
+  new Chart(ctx, {
+    type: "radar",
+    data: {
+      labels: data.clubs.map(c => c.name),
+      datasets: [{
+        label: "Consistency",
+        data: data.clubs.map(c => c.consistencyScore)
+      }]
+    },
+    options: { scales: { r: { min: 0, max: 100 } } }
   });
 }
 
-// ---------------------- MOBILITY ----------------------
-
-function renderMobilityCharts(data) {
-  const dates = data.map(d => d.date);
-  const scores = data.map(d => d.mobility_score || 0);
-
-  new Chart(document.getElementById("mobilityChart"), {
+function renderSwingPosture(data) {
+  const ctx = document.getElementById("swing-posture");
+  new Chart(ctx, {
     type: "line",
     data: {
-      labels: dates,
-      datasets: [{ label: "Mobility Score", data: scores, borderColor: "#14b8a6", tension: 0.3 }]
-    },
+      labels: ["Tempo", "Rotation", "Hand Path"],
+      datasets: [{
+        label: "Swing Posture",
+        data: [data.swingMetrics.tempo, data.swingMetrics.rotation, data.swingMetrics.handPath]
+      }]
+    }
+  });
+}
+
+function renderMobilityTrends(data) {
+  const ctx = document.getElementById("mobility-trends");
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: data.mobility.map(m => m.date),
+      datasets: [{
+        label: "Mobility Index",
+        data: data.mobility.map(m => m.value)
+      }]
+    }
   });
 }

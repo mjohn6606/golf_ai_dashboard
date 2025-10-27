@@ -1,16 +1,16 @@
 :root {
-  --bg: #f9fafb;
-  --text: #111827;
-  --primary: #2563eb;
-  --card: #ffffff;
+  --bg: #f7f9fb;
+  --primary: #1e90ff;
+  --text: #333;
+  --card-bg: #fff;
+  --shadow: rgba(0, 0, 0, 0.1);
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Poppins", sans-serif;
   background: var(--bg);
-  color: var(--text);
   margin: 0;
-  padding: 0;
+  color: var(--text);
 }
 
 header {
@@ -18,52 +18,48 @@ header {
   color: white;
   text-align: center;
   padding: 1rem;
-  border-bottom: 3px solid #1e40af;
+  box-shadow: 0 2px 6px var(--shadow);
 }
 
-header h1 { margin: 0.2rem; font-size: 1.8rem; }
-
-nav {
-  display: flex;
-  justify-content: space-around;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.tab-button {
-  flex: 1;
-  background: none;
-  border: none;
+main {
   padding: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  color: #6b7280;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-.tab-button.active {
-  color: var(--primary);
-  border-bottom: 3px solid var(--primary);
+.summary {
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 5px var(--shadow);
+  padding: 1rem;
 }
 
-main { padding: 1rem; }
-
-.card-grid {
+#club-averages {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 1rem;
 }
 
-.card {
-  background: var(--card);
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  padding: 1rem;
+.average-card {
+  background: var(--bg);
+  padding: 0.75rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: inset 0 0 5px var(--shadow);
 }
 
-.card h3 {
-  font-size: 1rem;
-  color: var(--primary);
-  margin-bottom: 0.5rem;
+.charts {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.chart-card {
+  background: var(--card-bg);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px var(--shadow);
 }
 
 canvas {
@@ -74,7 +70,6 @@ canvas {
 footer {
   text-align: center;
   padding: 1rem;
-  font-size: 0.8rem;
-  color: #6b7280;
-  margin-top: 2rem;
+  font-size: 0.9em;
+  color: #666;
 }

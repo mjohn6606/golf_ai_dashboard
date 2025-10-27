@@ -4,7 +4,7 @@ from pathlib import Path
 
 data_dir = Path(__file__).resolve().parents[1] / "data"
 input_dir = data_dir / "rapsodo_uploads"
-output_file = data_dir / "sample_rapsodo.json"
+output_file = data_dir / "rapsodo.json"
 
 all_data = []
 
