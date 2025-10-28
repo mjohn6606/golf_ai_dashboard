@@ -1,20 +1,48 @@
 import pandas as pd
 import json
-from pathlib import Path
+import glob
+import os
 
-data_dir = Path(__file__).resolve().parents[1] / "data"
-input_dir = data_dir / "rapsodo_uploads"
-output_file = data_dir / "rapsodo.json"
+def process_latest_rapsodo(data_dir="./data"):
+    # Get most recent CSV
+    csv_files = glob.glob(os.path.join(data_dir, "*.csv"))
+    if not csv_files:
+        raise FileNotFoundError("No Rapsodo CSVs found in /data folder.")
+    latest_file = max(csv_files, key=os.path.getctime)
 
-all_data = []
+    df = pd.read_csv(latest_file)
 
-for file in input_dir.glob("*.xlsx"):
-    df = pd.read_excel(file)
-    df.fillna("", inplace=True)
-    data = df.to_dict(orient="records")
-    all_data.extend(data)
+    # Clean up columns
+    df.columns = df.columns.str.strip()
 
-with open(output_file, "w") as f:
-    json.dump(all_data, f, indent=2)
+    # Compute per-club summaries
+    summary = df.groupby("Club Type").agg({
+        "Carry Distance": ["mean", "std"],
+        "Total Distance": "mean",
+        "Ball Speed": "mean",
+        "Launch Angle": "mean",
+        "Club Speed": "mean",
+        "Smash Factor": "mean"
+    }).round(2)
 
-print(f"✅ Updated {output_file} with {len(all_data)} entries from Excel files.")
+    summary.columns = ["_".join(col).strip() for col in summary.columns.values]
+    summary = summary.reset_index()
+
+    # Create dispersion data (side carry spread)
+    dispersion = df.groupby("Club Type")["Side Carry"].apply(list).to_dict()
+
+    # Merge everything
+    output = {
+        "clubs": summary.to_dict(orient="records"),
+        "dispersion": dispersion
+    }
+
+    # Save as JSON for dashboard
+    output_path = os.path.join(data_dir, "rapsodo_data.json")
+    with open(output_path, "w") as f:
+        json.dump(output, f, indent=2)
+
+    print(f"✅ Processed {latest_file} → {output_path}")
+
+if __name__ == "__main__":
+    process_latest_rapsodo()

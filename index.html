@@ -3,53 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Golf Performance Dashboard</title>
-  <link rel="stylesheet" href="assets/style.css" />
+  <title>Rapsodo Golf Performance Dashboard</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: "#166534",
+            accent: "#a3e635",
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Chart.js for data visualizations -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/29/29302.png" />
 </head>
-<body>
-  <header>
-    <h1>Golf Performance Dashboard</h1>
+
+<body class="bg-gray-50 text-gray-900 font-sans">
+  <header class="bg-primary text-white py-6 shadow-lg sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold tracking-wide">🏌️‍♂️ Rapsodo Golf Dashboard</h1>
+      <nav class="space-x-4 text-sm sm:text-base">
+        <a href="#club-averages" class="hover:text-accent">Club Averages</a>
+        <a href="#shot-dispersion" class="hover:text-accent">Dispersion</a>
+        <a href="#carry-distance" class="hover:text-accent">Carry</a>
+        <a href="#consistency" class="hover:text-accent">Consistency</a>
+        <a href="#swing-posture" class="hover:text-accent">Posture</a>
+        <a href="#mobility-trends" class="hover:text-accent">Mobility</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <section class="summary">
-      <h2>Club Averages</h2>
-      <div id="club-averages"></div>
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-12">
+    <!-- Club Averages -->
+    <section id="club-averages" class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">🏌️ Club Averages</h2>
+      <canvas id="clubAveragesChart" class="w-full h-64"></canvas>
     </section>
 
-    <section class="charts">
-      <div class="chart-card">
-        <h3>Shot Dispersion</h3>
-        <canvas id="shot-dispersion"></canvas>
-      </div>
+    <!-- Shot Dispersion -->
+    <section id="shot-dispersion" class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">🎯 Shot Dispersion</h2>
+      <canvas id="shotDispersionChart" class="w-full h-64"></canvas>
+    </section>
 
-      <div class="chart-card">
-        <h3>Carry Distance per Club</h3>
-        <canvas id="carry-distance"></canvas>
-      </div>
+    <!-- Carry Distance -->
+    <section id="carry-distance" class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">🏹 Carry Distance Over Time</h2>
+      <canvas id="carryDistanceChart" class="w-full h-64"></canvas>
+    </section>
 
-      <div class="chart-card">
-        <h3>Consistency per Club</h3>
-        <canvas id="consistency-chart"></canvas>
-      </div>
+    <!-- Consistency -->
+    <section id="consistency" class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">📊 Consistency</h2>
+      <canvas id="consistencyChart" class="w-full h-64"></canvas>
+    </section>
 
-      <div class="chart-card">
-        <h3>Swing Posture Metrics</h3>
-        <canvas id="swing-posture"></canvas>
-      </div>
+    <!-- Swing Posture -->
+    <section id="swing-posture" class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">🧍 Swing Posture Analysis</h2>
+      <canvas id="swingPostureChart" class="w-full h-64"></canvas>
+    </section>
 
-      <div class="chart-card">
-        <h3>Mobility Trends</h3>
-        <canvas id="mobility-trends"></canvas>
-      </div>
+    <!-- Mobility Trends -->
+    <section id="mobility-trends" class="bg-white rounded-2xl shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">🌀 Mobility Trends</h2>
+      <canvas id="mobilityTrendsChart" class="w-full h-64"></canvas>
     </section>
   </main>
 
-  <footer>
-    <p>Powered by Rapsodo - Chart.js - OpenCV</p>
+  <footer class="bg-primary text-white text-center py-4 mt-8 text-sm">
+    <p>© 2025 Project Golf — Data-driven performance powered by AI.</p>
   </footer>
 
-  <script src="assets/dashboard.js"></script>
+  <!-- Dashboard Script -->
+  <script src="js/dashboard.js"></script>
 </body>
 </html>
