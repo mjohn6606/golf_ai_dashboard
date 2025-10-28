@@ -3,7 +3,7 @@ import json
 import glob
 import os
 
-def process_latest_rapsodo(data_dir="./data"):
+def process_latest_rapsodo(data_dir="./data/rapsodo_uploads"):
     # Get most recent CSV
     csv_files = glob.glob(os.path.join(data_dir, "*.csv"))
     if not csv_files:
