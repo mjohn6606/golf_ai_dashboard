@@ -1,19 +1,19 @@
 {
-  "generated_at": "2025-10-28T00:52:57.456331Z",
+  "generated_at": "2025-10-29T01:30:33.340513Z",
   "records": [
     {
-      "date": "2025-10-28",
-      "trunk_rotation_deg": 36.0,
-      "hip_rotation_deg": 40.0,
-      "mobility_index": 62.7,
-      "notes": "felt tight in lower back"
+      "date": "2025-10-29",
+      "trunk_rotation_deg": null,
+      "hip_rotation_deg": null,
+      "mobility_index": 0.0,
+      "notes": ""
     },
     {
-      "date": "2025-10-28",
-      "trunk_rotation_deg": 38.0,
-      "hip_rotation_deg": 42.0,
-      "mobility_index": 66.0,
-      "notes": "improved after mobility session"
+      "date": "2025-10-29",
+      "trunk_rotation_deg": null,
+      "hip_rotation_deg": null,
+      "mobility_index": 0.0,
+      "notes": ""
     }
   ]
 }

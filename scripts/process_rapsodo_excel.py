@@ -38,7 +38,8 @@ def process_latest_rapsodo(data_dir="./data/rapsodo_uploads"):
     }
 
     # Save as JSON for dashboard
-    output_path = os.path.join(data_dir, "rapsodo_data.json")
+    # output_path = os.path.join(data_dir, "rapsodo_data.json")
+    output_path = "./data"
     with open(output_path, "w") as f:
         json.dump(output, f, indent=2)
 
