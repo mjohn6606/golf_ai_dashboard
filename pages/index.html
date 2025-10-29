@@ -4,15 +4,101 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cyborg Albatross | Golf AI Dashboard</title>
-  <link rel="stylesheet" href="../assets/style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="../assets/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body>
-  <h2>🏌️ Project Golf Tracker</h2>
-  <div class="upload-box">
-    <a href="upload-rapsodo.html"><button>Upload Rapsodo CSV</button></a>
-    <a href="putting.html"><button>Enter Putting Data</button></a>
-    <a href="chipping.html"><button>Enter Chipping Data</button></a>
-    <a href="round.html"><button>Enter Round Data</button></a>
+
+<body class="bg-gradient-to-br from-green-100 via-white to-green-200 min-h-screen flex flex-col justify-center items-center p-4">
+  <div class="w-full max-w-md bg-white rounded-3xl shadow-lg p-6 space-y-6">
+    <h1 class="text-2xl font-bold text-center text-green-800">🏌️ Project Golf Tracker</h1>
+    <p class="text-center text-gray-500 mb-4">Log your practice, rounds, and swing data</p>
+
+    <!-- RAPSODO UPLOAD -->
+    <div class="bg-green-50 rounded-2xl p-4 shadow-sm">
+      <h2 class="text-lg font-semibold text-green-700 mb-2">Upload Rapsodo CSV</h2>
+      <form id="rapsodoForm" class="space-y-3">
+        <input type="file" id="rapsodoFile" accept=".csv" class="block w-full text-sm text-gray-700 border rounded-lg p-2" required>
+        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition">Upload CSV</button>
+      </form>
+      <p id="rapsodoStatus" class="text-sm text-center mt-2 text-gray-500"></p>
+    </div>
+
+    <!-- SWING VIDEO UPLOAD -->
+    <div class="bg-green-50 rounded-2xl p-4 shadow-sm">
+      <h2 class="text-lg font-semibold text-green-700 mb-2">Upload Swing Video</h2>
+      <form id="videoForm" class="space-y-3">
+        <input type="file" id="videoFile" accept="video/mp4" class="block w-full text-sm text-gray-700 border rounded-lg p-2" required>
+        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition">Upload Video</button>
+      </form>
+      <p id="videoStatus" class="text-sm text-center mt-2 text-gray-500"></p>
+    </div>
+
+    <!-- QUICK ENTRY LINKS -->
+    <div class="grid grid-cols-1 gap-3">
+      <a href="putting.html" class="block bg-green-500 text-white text-center py-3 rounded-xl font-semibold hover:bg-green-600 transition">Enter Putting Data</a>
+      <a href="chipping.html" class="block bg-green-500 text-white text-center py-3 rounded-xl font-semibold hover:bg-green-600 transition">Enter Chipping Data</a>
+      <a href="round.html" class="block bg-green-500 text-white text-center py-3 rounded-xl font-semibold hover:bg-green-600 transition">Enter Round Data</a>
+    </div>
+
+    <p class="text-center text-xs text-gray-400 mt-4">Offline mode supported. Data syncs when reconnected.</p>
   </div>
+
+  <script>
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // --- Upload Rapsodo CSV ---
+    document.getElementById("rapsodoForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fileInput = document.getElementById("rapsodoFile");
+      const file = fileInput.files[0];
+      const status = document.getElementById("rapsodoStatus");
+
+      if (!file) {
+        status.textContent = "Please select a file.";
+        return;
+      }
+
+      status.textContent = "Uploading...";
+      try {
+        const { data, error } = await supabaseClient.storage.from("rapsodo-data").upload(`csv/${file.name}`, file, { upsert: true });
+        if (error) throw error;
+        status.textContent = "✅ Uploaded successfully!";
+      } catch (err) {
+        console.error(err);
+        status.textContent = "⚠️ Upload failed. Check connection.";
+      }
+    });
+
+    // --- Upload Swing Video ---
+    document.getElementById("videoForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const file = document.getElementById("videoFile").files[0];
+      const status = document.getElementById("videoStatus");
+
+      if (!file) {
+        status.textContent = "Please select a video.";
+        return;
+      }
+
+      status.textContent = "Uploading...";
+      try {
+        const { data, error } = await supabaseClient.storage.from("videos").upload(`swings/${file.name}`, file, { upsert: true });
+        if (error) throw error;
+
+        // Insert DB row for listener automation
+        const { error: dbError } = await supabaseClient.from("swing_videos").insert([
+          { video: file.name, processed: false }
+        ]);
+        if (dbError) throw dbError;
+
+        status.textContent = "✅ Video uploaded and logged!";
+      } catch (err) {
+        console.error(err);
+        status.textContent = "⚠️ Upload failed. Try again later.";
+      }
+    });
+  </script>
 </body>
 </html>
