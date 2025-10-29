@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     // Load data from your repo's data folder (works on GitHub Pages)
     const [rapsodoRes, swingRes, mobilityRes] = await Promise.all([
-      fetch("data/rapsodo_data.json"),
-      fetch("data/swing_analysis.json"),
-      fetch("data/mobility_data.json")
+      fetch("../data/rapsodo.json"),
+      fetch("../data/swing_analysis.json"),
+      fetch("../data/mobility_data.json")
     ]);
 
     const rapsodoData = await rapsodoRes.json();
