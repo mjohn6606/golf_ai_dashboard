@@ -1,75 +1,38 @@
-:root {
-  --bg: #f7f9fb;
-  --primary: #1e90ff;
-  --text: #333;
-  --card-bg: #fff;
-  --shadow: rgba(0, 0, 0, 0.1);
-}
-
 body {
-  font-family: "Poppins", sans-serif;
-  background: var(--bg);
-  margin: 0;
-  color: var(--text);
+  font-family: system-ui, sans-serif;
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  background: #f6f7f9;
 }
-
-header {
-  background: var(--primary);
-  color: white;
+h2 {
   text-align: center;
-  padding: 1rem;
-  box-shadow: 0 2px 6px var(--shadow);
 }
-
-main {
-  padding: 1rem;
+form, .upload-box {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 10px;
 }
-
-.summary {
-  background: var(--card-bg);
-  border-radius: 12px;
-  box-shadow: 0 2px 5px var(--shadow);
-  padding: 1rem;
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
 }
-
-#club-averages {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;
+button:hover {
+  background: #0056b3;
 }
-
-.average-card {
-  background: var(--bg);
-  padding: 0.75rem;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: inset 0 0 5px var(--shadow);
+input, select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
-
-.charts {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-}
-
-.chart-card {
-  background: var(--card-bg);
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 5px var(--shadow);
-}
-
-canvas {
-  width: 100% !important;
-  height: 250px !important;
-}
-
-footer {
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.9em;
-  color: #666;
+a {
+  text-decoration: none;
 }

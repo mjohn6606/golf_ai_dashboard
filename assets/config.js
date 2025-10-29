@@ -1,0 +1,3 @@
+// assets/config.js
+export const SUPABASE_URL = 'https://cqlsovoiowdtfukotgdu.supabase.co';
+export const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxbHNvdm9pb3dkdGZ1a290Z2R1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE3MzMxOTYsImV4cCI6MjA3NzMwOTE5Nn0.5G4tUhd8f0M_L5Xmtknw222VTMsfAh-O4sQ0VnVXFyk';
