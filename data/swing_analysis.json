@@ -1,9 +1,9 @@
 {
-  "generated_at": "2025-10-28T00:52:57.240638Z",
+  "generated_at": "2025-10-29T01:38:31.256724Z",
   "videos": [
     {
       "video": "MJ_LW_127270370_O1.mp4",
-      "analyzed_at": "2025-10-28T00:52:48.713397Z",
+      "analyzed_at": "2025-10-29T01:38:22.717294Z",
       "frames_analyzed": 160,
       "fps": 40.0,
       "swing_duration_seconds": 7.95,
@@ -2126,7 +2126,7 @@
     },
     {
       "video": "MJ_PW_127057332_O1.mp4",
-      "analyzed_at": "2025-10-28T00:52:55.591663Z",
+      "analyzed_at": "2025-10-29T01:38:29.613084Z",
       "frames_analyzed": 160,
       "fps": 40.0,
       "swing_duration_seconds": 7.95,
